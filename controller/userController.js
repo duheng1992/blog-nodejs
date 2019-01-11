@@ -11,7 +11,7 @@ exports.checkUser = async (req,res) => {
 	var username = req.body.user_name;
 	//console.log(username)
 	//console.log("------userController-----------")
-	var sql = 'select user_id, user_name from T_SYS_USER where user_name = ?';
+	var sql = 'select user_id, user_name from t_sys_user where user_name = ?';
 	var users = await dbUtils.queryData(sql,[username]);
 	//console.log(users[0])
 	if(users.length === 0){
@@ -68,8 +68,8 @@ exports.login = async (req,res) => {
 //     res.send(`haaaaa${req.session.cookie.maxAge}`);
 	//console.log("------userController-----------")	
 	var sql = 'select t.user_id, t.nick_name user_name, t.src_img, t.user_class, c.blog_itemname  ' +
-		' from T_SYS_USER t ' +
-		' left join M_SYS_CATRGORY c on c.user_id = t.user_id and c.is_on = "1" ' +
+		' from t_sys_user t ' +
+		' left join  m_sys_catrgory c on c.user_id = t.user_id and c.is_on = "1" ' +
 		' where user_name = ? and user_password = ?';
 	var users = await dbUtils.queryData(sql,[username, password]);
 
@@ -113,7 +113,7 @@ exports.regist = async (req,res) => {
 	// console.log(userclass)
 
 	//console.log("------userController-----------")
-	var sql = 'select user_id, user_name from T_SYS_USER where user_name = ?';
+	var sql = 'select user_id, user_name from t_sys_user where user_name = ?';
 	var users = await dbUtils.queryData(sql,[username]);
 	//console.log(users[0])
 	if(users.length != 0){
@@ -134,7 +134,7 @@ exports.regist = async (req,res) => {
 			return res.json({'resCode':'03', 'resData': '密码必须介于3-16位之间'});
 			//console.log("------userController-----------")
 		}
-		var sql = 'insert into T_SYS_USER (user_id,'+
+		var sql = 'insert into t_sys_user (user_id,'+
 			' user_name, nick_name, user_password, email, phone, zone, user_class, sex, create_date, update_date)'+
 			' values("'+ID+'",?,?,?,?,?,?,?,?,"' + dateFormatter.dateFormatter(new Date(),'yyyy-MM-dd') + '", "'+ dateFormatter.dateFormatter(new Date(),'yyyy-MM-dd') +'")';
 		users = await dbUtils.queryData(sql,[username,nickName,password,email,phone,zone,userclass,sex]);
@@ -157,7 +157,7 @@ module.exports.queryUser = async (req,res) => {
 	var userId = req.body.user_id;
 	var users = [];
 	if(userId){
-		var sql = 'select * from T_SYS_USER where user_id = ?';
+		var sql = 'select * from t_sys_user where user_id = ?';
 		users = await dbUtils.queryData(sql,[userId]);
 	}
 
@@ -175,7 +175,7 @@ module.exports.removeUser = async (req,res) => {
 	//console.log(userId)
 	var users = [];
 	if(userId){
-		var sql = 'delete from T_SYS_USER where user_id = ?';
+		var sql = 'delete from t_sys_user where user_id = ?';
 		users = await dbUtils.queryData(sql,[userId]);
 	}
 
@@ -201,7 +201,7 @@ module.exports.modifyUser = async (req,res) => {
 	var src_img = req.body.rc_img;
 	var userclass = req.body.user_class;
 	var users = [];
-	var sql = 'update T_SYS_USER set ';
+	var sql = 'update t_sys_user set ';
 	if(userId){
 		if(username){
 			sql += ' user_name = "' + username + '" ,';  //oracle用and链接
@@ -252,8 +252,8 @@ module.exports.queryUserList = async (req,res) => {
 	var page = req.query.page;
 	var pagesize = req.query.pagesize;
 	//console.log(nameForSearch)
-	var sql = 'select t.* from T_SYS_USER t ';
-	sql += ' inner join M_SYS_CATRGORY c on c.blog_itemcode = t.user_class where 1=1 ';
+	var sql = 'select t.* from t_sys_user t ';
+	sql += ' inner join m_sys_catrgory c on c.blog_itemcode = t.user_class where 1=1 ';
 	var users = [];
 	if(nameForSearch){
 		sql += ' and t.nick_name like "%' + nameForSearch + '%"';
@@ -285,8 +285,8 @@ module.exports.queryAdminUserList = async (req,res) => {
 	var page = req.query.page;
 	var pagesize = req.query.pagesize;
 	//console.log(nameForSearch)
-	var sql = 'select t.* from T_SYS_USER t ';
-	sql += ' inner join M_SYS_CATRGORY c on c.blog_itemcode = t.user_class where 1=1 ';
+	var sql = 'select t.* from t_sys_user t ';
+	sql += ' inner join m_sys_catrgory c on c.blog_itemcode = t.user_class where 1=1 ';
 	var users = [];
 	if(nameForSearch){
 		sql += ' and t.nick_name like "%' + nameForSearch + '%"';

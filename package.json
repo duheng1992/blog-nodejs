@@ -1,7 +1,7 @@
 {
   "name": "nodejs",
   "version": "1.0.0",
-  "description": "",
+  "description": "对数据库获取进行封装，避免express的回调地狱： ``` data.queryData = (sql, param) => { \treturn new Promise( (resolve, reject) => { \t\tpool.getConnection((err, connection) => { \t\t\tconnection.query(sql,param,(err, result)=>{ \t\t\t\tconnection.release();",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +24,13 @@
     "request": "^2.88.0",
     "url": "^0.11.0",
     "uuid": "^3.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duheng1992/nodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/duheng1992/nodejs/issues"
+  },
+  "homepage": "https://github.com/duheng1992/nodejs#readme"
 }

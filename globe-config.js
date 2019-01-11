@@ -19,7 +19,8 @@ module.exports = {
 
 	//服务器所在地址
 	host1: 'http://localhost',
-	host2 : 'http://192.168.31.239',
+	//host2 : 'http://192.168.1.88',
+	host2: 'http://122.112.216.70',
 	movieUrl : "https://douban.uieee.com/v2/movie",
 	movieUrl2 : "https://api.douban.com/v2/movie"
 }

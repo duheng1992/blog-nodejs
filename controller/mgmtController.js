@@ -4,7 +4,7 @@ const dateFormatter = require('../utils/dateFormatter')
 
 exports.queryMenuList = async (req, res) => {
 	//console.log(req.session.cookie)
-    var sql = 'select menu_id, menu_name, parent_menu_id, icon, isLeaf, menu_url from T_MGMT_MENU';
+    var sql = 'select menu_id, menu_name, parent_menu_id, icon, isLeaf, menu_url from t_mgmt_menu';
     var menus = await dbUtils.queryData(sql,[]);
 	//console.log(users[0])
 	if(menus.length === 0){

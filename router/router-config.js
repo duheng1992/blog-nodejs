@@ -48,6 +48,9 @@ router.post("/user/checkUser",urlencodedParser, userController.checkUser)
 .get('/post/:blog_id', postController.queryPostById)
 //添加博客
 .post('/post/mgmt/addOrUpdatePost', postController.addOrUpdatePost)
+//添加博客图片
+.post('/post/uploadBlogImage', fileController.uploadBlogImage)
+
 //删除博客
 .get('/post/mgmt/delPost', postController.delPost)
 //查找博客点击量

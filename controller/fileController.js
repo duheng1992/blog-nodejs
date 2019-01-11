@@ -86,6 +86,45 @@ exports.uploadAvatar = async (req, res) => {
   
 // }
 
+//上传博客图片
+exports.uploadBlogImage = async(req, res) => {
+    var file = req.file;
+    //console.log(req.file)
+    //console.log(res.file)
+    //将文件存入路径 static/blogImg
+    if (file) {
+         var fileNameArr = file.originalname.split('.');
+         var suffix = fileNameArr[fileNameArr.length - 1];
+        // //文件重命名
+        // fs.renameSync('uploads/' + file.filename, `./uploads/${file.filename}.${suffix}`);
+        // file['newfilename'] = `${file.filename}.${suffix}`;
+
+         // 创建读取流
+        readable = fs.createReadStream( 'uploads/' + `${file.filename}` );
+        //console.log(readable)
+        //判断目录
+        fs.exists('public/blogImg',function(exists){
+          if(exists){
+            //console.log("目录存在");
+          }
+          if(!exists){
+            fs.mkdirSync('public/blogImg');
+          }
+        })
+        // 创建写入流
+        writable = fs.createWriteStream( `public/blogImg/${file.filename}.${suffix}`); 
+        // 通过管道来传输流
+        readable.pipe( writable );
+
+        return res.json({
+            //这里可以只返回title，当点击title时，在加载具体的文章
+            'resCode':'01',
+            'resData': `blogImg/${file.filename}.${suffix}`
+        });
+
+    }
+}
+
 // 运行python脚本 （或者使用cluster模块）
 exports.runPy = async (req, res) => {
     var exec = require('child_process').exec;

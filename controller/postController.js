@@ -11,7 +11,7 @@ exports.queryMyAllPost = async (req, res) => {
 	var count = null;
     //console.log(req.params)
     //console.log(req.query)
-    var sql = 'select t.*, u.user_name, u.nick_name from T_BLOG t left join t_sys_user u on t.user_id = u.user_id where 1=1 '; //where user_id = "' + userId + '"';
+    var sql = 'select t.*, u.user_name, u.nick_name from t_blog t left join t_sys_user u on t.user_id = u.user_id where 1=1 '; //where user_id = "' + userId + '"';
 
     if(classify){
     	sql += ' and t.classify = "'+ classify +'" ';
@@ -63,7 +63,7 @@ exports.queryMyAllPost = async (req, res) => {
  
 exports.queryPostById = async (req, res) => {
 	var blogId = req.params.blog_id;
-    var sql = 'select * from T_BLOG where blog_id = "' + blogId + '"';
+    var sql = 'select * from t_blog where blog_id = "' + blogId + '"';
     var userpost = await dbUtils.queryData(sql,[]);
 	//console.log(users[0])
 	if(userpost.length === 0){
@@ -101,7 +101,7 @@ exports.addOrUpdatePost = async(req, res) => {
 
   if(blogId){
   	//此时是更新
-  	sql = ' update T_BLOG set ';
+  	sql = ' update t_blog set ';
   	if(content){
 		sql += ' content = "' + content + '" ,';  //oracle用and链接
 	}
@@ -126,7 +126,7 @@ exports.addOrUpdatePost = async(req, res) => {
   	//此时是新增
   	var ID = UUID.v1().replace(/\-/g,"");
 
-	sql = " insert into T_BLOG (blog_id,title,blog_sumary,classify,user_id,content,create_time,hits,description) values (?,?,?,?,?,?,?,?,?) ";
+	sql = " insert into t_blog (blog_id,title,blog_sumary,classify,user_id,content,create_time,hits,description) values (?,?,?,?,?,?,?,?,?) ";
 	newpost = await dbUtils.queryData(sql,[ID,title,blogSumary,classify,userId,content,dateFormatter.dateFormatter(new Date(),'yyyy-MM-dd'),0,description]);
 
   }
@@ -145,7 +145,7 @@ exports.delPost = async(req, res) => {
 	//console.log(req.body)
   var blogId = req.query.blogId;
 
-  var sql = " delete from T_BLOG where blog_id = ? ";
+  var sql = " delete from t_blog where blog_id = ? ";
   var resp = await dbUtils.queryData(sql,[blogId]);
 
   if(resp.length === 0){
@@ -159,7 +159,7 @@ exports.delPost = async(req, res) => {
 
 exports.getHits = async(req, res) => {
 
-  var sql = " select hits, title from T_BLOG order by hits desc limit 0,5";
+  var sql = " select hits, title from t_blog order by hits desc limit 0,5";
   var resp = await dbUtils.queryData(sql,[]);
 
   if(resp.length === 0){

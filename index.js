@@ -87,7 +87,7 @@ app.use(session({
 const host1 = require('./globe-config').host1;
 const host2 = require('./globe-config').host2;
 var allowCrossDomain = function (req, res, next) {
-    //console.log(req.headers.origin) //可能会是localhost或者具体的ip
+    console.log(req.headers.origin) //可能会是localhost或者具体的ip
     //console.log(host2+':8088')
     if(req.headers.origin == (host1+':1818') || req.headers.origin == (host1+':8080') || req.headers.origin == (host1+':8088') ||
         req.headers.origin == (host2+':1818') || req.headers.origin == (host2+':8080') || req.headers.origin == (host2+':8088')){
